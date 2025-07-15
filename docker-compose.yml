@@ -1,0 +1,29 @@
+services:
+  postgres:
+    container_name: postgres-sql
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: demo_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgres/data
+    networks:
+      - unitrack-postgres
+
+  unitrack:
+    container_name: unitrack
+    image: unitrack
+    ports:
+      - "8088:8081"
+    networks:
+      - unitrack-postgres
+
+volumes:
+  postgres:
+
+networks:
+  unitrack-postgres:
+    driver: bridge
